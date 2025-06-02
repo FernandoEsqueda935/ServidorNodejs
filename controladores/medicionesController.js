@@ -24,6 +24,27 @@ const createMedicion = async (req, res) => {
   }
 }
 
+const getLastMediciones = async (req, res) => {
+  try {
+    const { s_id } = req.params;
+    if (!s_id) {
+      return res.status(400).json({ error: "Falta el s_id." });
+    }
+
+    const mediciones = await Medicion.findAll({
+      where: { s_id },
+      order: [['fecha', 'DESC'], ['hora', 'DESC']],
+      limit: 10
+    });
+
+    return res.status(200).json(mediciones);
+  } catch (error) {
+    console.error("Error al obtener mediciones:", error);
+    return res.status(500).json({ error: "Error interno del servidor." });
+  }
+}
+
 module.exports = {
-  createMedicion
+  createMedicion,
+    getLastMediciones
 };
