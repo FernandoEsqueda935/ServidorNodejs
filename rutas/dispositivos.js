@@ -2,9 +2,10 @@
 const express = require('express');
 const router = express.Router();
 
-const { crearDispositivo } = require('../controladores/dispositivosController');
-const d_id_to_esp = require('../middlewares/d_id_esp');
+const { crearDispositivo, getDispositivosSinRegistrar, updateDispositivoSinRegistrar } = require('../controladores/dispositivosController');
 
-router.post('/dispositivos', d_id_to_esp, crearDispositivo);
+router.post('/dispositivos', crearDispositivo);
+router.get('/sin-registrar', getDispositivosSinRegistrar);
+router.put('/sin-registrar/:d_id', updateDispositivoSinRegistrar);
 
 module.exports = router;

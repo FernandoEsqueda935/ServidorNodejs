@@ -24,6 +24,27 @@ const createMedicion = async (req, res) => {
   }
 }
 
+const createMedicionFechaYHora = async (req, res) => {
+  try {
+    const { valor, s_id, fecha, hora } = req.body;
+    if (!valor || !s_id || !fecha || !hora) {
+      return res.status(400).json({ error: "Faltan campos requeridos." });
+    }
+
+    const nuevaMedicion = await Medicion.create({
+      valor, s_id, fecha, hora
+    });
+
+    return res.status(201).json({
+      mensaje: "Medición creada correctamente.",
+      medicion: nuevaMedicion
+    });
+  } catch (error) {
+    console.error("Error al crear medición:", error);
+    return res.status(500).json({ error: "Error interno del servidor." });
+  }
+}
+
 const getLastMediciones = async (req, res) => {
   try {
     const { s_id } = req.params;
@@ -34,7 +55,7 @@ const getLastMediciones = async (req, res) => {
     const mediciones = await Medicion.findAll({
       where: { s_id },
       order: [['fecha', 'DESC'], ['hora', 'DESC']],
-      limit: 10
+      limit: 20
     });
 
     return res.status(200).json(mediciones);
@@ -46,5 +67,6 @@ const getLastMediciones = async (req, res) => {
 
 module.exports = {
   createMedicion,
-    getLastMediciones
+    getLastMediciones,
+    createMedicionFechaYHora
 };

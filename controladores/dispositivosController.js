@@ -21,6 +21,62 @@ const crearDispositivo = async (req, res) => {
   }
 };
 
+const CreateDispositivoSinRegistrar = async () => {
+  try {
+    const d = await Dispositivo.create({
+      nombre: null,
+      lugar: null
+    });
+
+    return d;
+  }
+  catch (error) {
+    return error;
+  }
+}
+
+const getDispositivosSinRegistrar = async (req, res) => {
+  try {
+    const dispositivos = await Dispositivo.findAll({
+      where: {
+        nombre: null,
+        lugar: null
+      }
+    });
+    res.status(200).json(dispositivos);
+  } catch (error) {
+    console.error("Error al obtener dispositivos sin registrar:", error);
+    res.status(500).json({ error: "Error interno del servidor." });
+  }
+};
+
+const updateDispositivoSinRegistrar = async (req, res) => {
+  const { d_id } = req.params;
+  const { nombre, lugar } = req.body;
+
+  try {
+    const dispositivo = await Dispositivo.findByPk(d_id);
+    if (!dispositivo) {
+      return res.status(404).json({ error: "Dispositivo no encontrado." });
+    }
+
+    dispositivo.nombre = nombre;
+    dispositivo.lugar = lugar;
+    await dispositivo.save();
+
+    res.status(200).json({
+      mensaje: "Dispositivo actualizado correctamente.",
+      dispositivo
+    });
+  } catch (error) {
+    console.error("Error al actualizar dispositivo:", error);
+    res.status(500).json({ error: "Error interno del servidor." });
+  }
+}
+
 module.exports = {
-  crearDispositivo
+  crearDispositivo,
+  CreateDispositivoSinRegistrar,
+  getDispositivosSinRegistrar,
+  updateDispositivoSinRegistrar
 };
