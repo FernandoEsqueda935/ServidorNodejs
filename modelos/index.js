@@ -3,6 +3,7 @@ const sequelize = require('../configuraciones/db'); // Asegúrate de que la ruta
 const Dispositivo = require('./dispositivos')(sequelize, DataTypes);
 const Sensor = require('./sensores')(sequelize, DataTypes);
 const Medicion = require('./mediciones')(sequelize, DataTypes);
+const Notificacion = require('./notificacion')(sequelize, DataTypes);
 
 // Asociaciones (si las tienes)
 Dispositivo.associate?.({ Sensor });
@@ -14,5 +15,6 @@ module.exports = {
   Sequelize,
   Dispositivo,
   Sensor,
-  Medicion
+  Medicion,
+  Notificacion
 };

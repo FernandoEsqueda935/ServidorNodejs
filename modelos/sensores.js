@@ -17,6 +17,17 @@ module.exports = (sequelize, DataTypes) => {
       },
       nombre: {
         type: DataTypes.STRING(50)
+      },
+      slot: {
+        type: DataTypes.INTEGER
+      },
+      offset : {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
+      umbral: {
+        type: DataTypes.INTEGER,
+        defaultValue: 100000
       }
     }, {
       tableName: 'sensores',

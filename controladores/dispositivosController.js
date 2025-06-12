@@ -21,7 +21,7 @@ const crearDispositivo = async (req, res) => {
   }
 };
 
-const CreateDispositivoSinRegistrar = async () => {
+const createDispositivoSinRegistrar = async () => {
   try {
     const d = await Dispositivo.create({
       nombre: null,
@@ -74,9 +74,10 @@ const updateDispositivoSinRegistrar = async (req, res) => {
   }
 }
 
+
 module.exports = {
   crearDispositivo,
-  CreateDispositivoSinRegistrar,
+  createDispositivoSinRegistrar,
   getDispositivosSinRegistrar,
-  updateDispositivoSinRegistrar
+  updateDispositivoSinRegistrar,
 };
